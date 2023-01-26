@@ -62,7 +62,6 @@ const BasketScreen = () => {
 
 				<ScrollView className="divide-y divide-gray-200">
 					{Object.entries(groupedItemInBasket).map(([key, items]) => {
-						console.log("el item", items);
 						return (
 							<View
 								key={key}

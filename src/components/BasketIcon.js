@@ -10,8 +10,6 @@ const BasketIcon = () => {
 	const basketTotal = useSelector(selectBasketTotal);
 	const navigation = useNavigation();
 
-	console.log("el total", basketTotal);
-
 	if (items.length === 0) return null;
 
 	return (
