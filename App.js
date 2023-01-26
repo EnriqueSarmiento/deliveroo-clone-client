@@ -6,6 +6,7 @@ import HomeScreen from "./src/screens/HomeScreen";
 import RestaurantScreen from "./src/screens/RestaurantScreen";
 import BasketScreen from "./src/screens/BasketScreen";
 import PreparingOrderScreen from "./src/screens/PreparingOrderScreen";
+import DeliveryScreen from "./src/screens/DeliveryScreen";
 
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -34,6 +35,18 @@ export default function App() {
 						<Stack.Screen
 							name="PreparingOrderScreen"
 							component={PreparingOrderScreen}
+							options={{
+								presentation: "fullScreenModal",
+								headerShown: false,
+							}}
+						/>
+						<Stack.Screen
+							name="DeliveryScreen"
+							component={DeliveryScreen}
+							options={{
+								presentation: "fullScreenModal",
+								headerShown: false,
+							}}
 						/>
 					</Stack.Navigator>
 				</TailwindProvider>
