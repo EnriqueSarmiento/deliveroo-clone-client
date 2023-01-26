@@ -3,7 +3,11 @@ import React, { useMemo, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../features/restaurantSlice";
-import { removeFromBasket, selectBasketItems } from "../features/basketSlice";
+import {
+	removeFromBasket,
+	selectBasketItems,
+	selectBasketTotal,
+} from "../features/basketSlice";
 import { TrashIcon, XCircleIcon } from "react-native-heroicons/solid";
 import { SafeAreaView } from "react-native";
 import { urlFor } from "../../sanityFront";
@@ -13,6 +17,7 @@ const BasketScreen = () => {
 	const navigation = useNavigation();
 	const restaurant = useSelector(selectRestaurant);
 	const items = useSelector(selectBasketItems);
+	const total = useSelector(selectBasketTotal);
 	const [groupedItemInBasket, setGroupedItemsInBasket] = useState([]);
 	const dispatch = useDispatch();
 
@@ -44,7 +49,7 @@ const BasketScreen = () => {
 						<XCircleIcon height={50} width={50} color="#00CCBB" />
 					</TouchableOpacity>
 				</View>
-				<View className="flex-row items-center space-x-4 px-4 py-3 bg-white">
+				<View className="flex-row items-center space-x-4 px-4 py-3 bg-white mb-4">
 					<Image
 						source={{
 							uri: "https://links.papareact.com/wru",
@@ -57,13 +62,15 @@ const BasketScreen = () => {
 					</TouchableOpacity>
 				</View>
 
-				<ScrollView>
+				<ScrollView className="divide-y divide-gray-200">
 					{Object.entries(groupedItemInBasket).map(([key, items]) => (
 						<View
 							key={key}
 							className="flex-row items-center space-x-3 bg-white py-2 px-5"
 						>
-							<Text>{items.length} x</Text>
+							<Text className="text-[#00CCBB] capitalize">
+								{items.length} x
+							</Text>
 							<Image
 								source={{
 									uri: items[0]?.image
@@ -79,14 +86,37 @@ const BasketScreen = () => {
 							<TouchableOpacity
 								onPress={() => dispatch(removeFromBasket({ id: key }))}
 							>
-								<Text className="text-xs text-[#00CCBB]">
-									Remove
-									<TrashIcon height={20} width={20} color="#00CCBB" />
-								</Text>
+								<Text className="text-xs text-[#00CCBB]">Remove</Text>
 							</TouchableOpacity>
 						</View>
 					))}
 				</ScrollView>
+
+				<View className="p-5 bg-white mt-5 space-y-4">
+					<View className="flex-row justify-between">
+						<Text className="text-gray-400 ">Subtotal</Text>
+						<Text className="text-gray-400 ">
+							<Currency quantity={total} currency="USD" />
+						</Text>
+					</View>
+					<View className="flex-row justify-between">
+						<Text className="text-gray-400 ">Delivery Fee</Text>
+						<Text className="text-gray-400 ">
+							<Currency quantity={5.99} currency="USD" />
+						</Text>
+					</View>
+					<View className="flex-row justify-between">
+						<Text className="font-bold text-xl">Order total: </Text>
+						<Text className="font-bold text-xltext-black ">
+							<Currency quantity={total + 5.99} currency="USD" />
+						</Text>
+					</View>
+					<TouchableOpacity className="rounded-lg bg-[#00CCBB] p-3">
+						<Text className="text-center text-white text-lg font-bold">
+							Place order
+						</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 		</SafeAreaView>
 	);

@@ -1,5 +1,3 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image } from "react-native";
 import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -7,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/screens/HomeScreen";
 import RestaurantScreen from "./src/screens/RestaurantScreen";
 import BasketScreen from "./src/screens/BasketScreen";
+import PreparingOrderScreen from "./src/screens/PreparingOrderScreen";
 
 import { Provider } from "react-redux";
 import { store } from "./store";
@@ -31,6 +30,10 @@ export default function App() {
 								presentation: "modal",
 								headerShown: false,
 							}}
+						/>
+						<Stack.Screen
+							name="PreparingOrderScreen"
+							component={PreparingOrderScreen}
 						/>
 					</Stack.Navigator>
 				</TailwindProvider>
